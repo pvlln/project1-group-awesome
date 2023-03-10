@@ -1,12 +1,36 @@
 var searchBtn = document.querySelector("#searchBtn");
+var movieInput = document.querySelector("#movieText");
+
+function displaySearches() {
+    var searchArray = JSON.parse(localStorage.getItem("Movie Title")) || [];
+    console.log(searchArray)
+    
+    $("#movieText").autocomplete({
+        source: searchArray
+    });
+}
+
+movieInput.addEventListener("click", function() {
+    displaySearches();
+});
+
 
 searchBtn.addEventListener("click", function () {
     var movieText = document.querySelector("#movieText").value;
     var movieString = movieText.replace(/\s/g, "+");
-    console.log(movieString);
+    
+    var recentSearches = JSON.parse(localStorage.getItem("Movie Title")) || [];
+    if (!recentSearches.includes(movieText)) { 
+        recentSearches.unshift(movieText);
+    }
+    localStorage.setItem("Movie Title", JSON.stringify(recentSearches));
+    console.log(recentSearches);
 
     var container = document.querySelector(".container");
     container.innerHTML = "";
+
+    document.querySelector("#movieText").value = "";
+
 
     fetch("http://www.omdbapi.com/?apikey=6bb284e5&s=" + movieString + "&type=movie&plot=long&page=1")  
 
@@ -47,7 +71,8 @@ searchBtn.addEventListener("click", function () {
                     row.appendChild(card);
                 }
             }
-            
-
         });
-});
+});    
+
+
+
