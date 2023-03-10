@@ -38,7 +38,8 @@ $(function(){
               var dateDiv = document.createElement('div');
               dateDiv.classList.add('row');
               var dateEl = document.createElement('h4');
-              dateEl.textContent = 'Showtimes for today:';
+              var now = dayjs();
+              dateEl.textContent = 'Upcoming showtimes today:';
               dateEl.classList.add('justify-content-center');
               dateDiv.append(dateEl);
               userContainer.append(dateDiv);
