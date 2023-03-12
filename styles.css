@@ -1,0 +1,20 @@
+.container {
+    height: 1000px;
+}
+
+.card-poster {
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    height: 250px;
+    width: 175px;
+    display: block;
+}
+
+.card {
+    margin-right: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+}
