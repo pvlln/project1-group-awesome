@@ -39,7 +39,6 @@ searchBtn.addEventListener("click", function () {
 
         .then(response => response.json())
         .then(data => {
-            console.log(data);
 
             for (var i = 0; i < 2; i++) {
                 var row = document.createElement("div");
@@ -47,12 +46,14 @@ searchBtn.addEventListener("click", function () {
 
                 container.appendChild(row);
 
-                for (var i = 0; i < 8; i++) {
+                for (var i = 0; i < 8; i++) {                  
+                 
                     var card = document.createElement("div");
                     card.classList.add("card", "col-2", "mb-4");
 
                     var cardTitle = document.createElement("h5");
                     cardTitle.classList.add("card-title");
+                    cardTitle.setAttribute("data-title", data.Search[i].Title);
                     cardTitle.textContent = data.Search[i].Title;
 
                     var cardSubtitle = document.createElement("h6");
@@ -68,7 +69,26 @@ searchBtn.addEventListener("click", function () {
                     card.appendChild(cardPoster);
 
                     row.appendChild(card);
+
                 }
+                var searchListCards = document.querySelectorAll(".search-list")
+                searchListCards.forEach(Element => Element.addEventListener("click",openModal))
             }
         });
-});
+});    
+
+
+
+function openModal(event){
+    console.log(event.target.parentNode);
+    console.log(event.target.getAttribute("class"));
+
+document.getElementById("movie-title-modal").innerText = this.firstElementChild.textContent;
+document.getElementById("movie-description-modal").innerText = this.lastElementChild.textContent;
+document.getElementById("movie-image-modal").setAttribute("src", this.getAttribute("data-image"));
+document.getElementById("imdb").innerText = this.getAttribute("data-imdb");
+// document.getElementById("movie-title-modal").innerHTML = "";
+// document.getElementById("movie-title-modal").innerHTML = "";
+ 
+}
+
