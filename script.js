@@ -39,6 +39,7 @@ searchBtn.addEventListener("click", function () {
 
         .then(response => response.json())
         .then(data => {
+            console.log(data)
 
             for (var i = 0; i < 2; i++) {
                 var row = document.createElement("div");
@@ -49,7 +50,9 @@ searchBtn.addEventListener("click", function () {
                 for (var i = 0; i < 8; i++) {                  
                  
                     var card = document.createElement("div");
-                    card.classList.add("card", "col-2", "mb-4");
+                    card.classList.add("card", "col-2", "mb-4", "search-list");
+                    card.setAttribute("data-image", data.Search[i].Poster);
+                    card.setAttribute("data-imdb", data.Search[i].imdbID);
 
                     var cardTitle = document.createElement("h5");
                     cardTitle.classList.add("card-title");
