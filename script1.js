@@ -44,14 +44,34 @@ searchBtn.addEventListener("click", function () {
                 container.appendChild(row);
                 
                 for (var i = 0; i < 8; i++) {
-  
-                    
+                    var modalContent = document.createElement("div")
+                    modalContent.innerHTML = `
+                    <div class="modal fade" id="movie-${data.Search[i].imdbID}" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">${data.Search[i].Title}</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+    <img src="${data.Search[i].Poster}" width="400" height="400"/>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Understood</button>
+      </div>
+    </div>
+  </div>
+</div>
+                    `
 
-                 
+                    var modalButton = document.createElement("div");
+                    modalButton.classList.add("modal-open")
+                    modalButton.setAttribute("data-bs-target",`movie-${data.Search[i].imdbID}`)
+                    modalButton.setAttribute("data-bs-toggle","modal")
                     var card = document.createElement("div");
-                    card.classList.add("card", "col-3", "mb-4","search-list");
-                    card.setAttribute("data-image", data.Search[i].Poster)
-                    card.setAttribute("data-imdb", data.Search[i].imdbID)
+                    card.classList.add("card", "col-3", "mb-4");
+            
                     var cardBody = document.createElement("div");
                     cardBody.classList.add("card-body");
             
@@ -66,34 +86,42 @@ searchBtn.addEventListener("click", function () {
             
                     var cardText = document.createElement("p");
                     cardText.classList.add("card-text");
-                    cardText.textContent = data.Search[i].type;
+                    cardText.textContent = data.Search[i].Plot;
             
                     cardBody.appendChild(cardTitle);
                     cardBody.appendChild(cardSubtitle);
                     cardBody.appendChild(cardText);
             
                     card.appendChild(cardBody);
-                        
-                    row.appendChild(card);
+                        modalButton.appendChild(card)
+                        modalButton.appendChild(modalContent)
+                    row.appendChild(modalButton);
 
                 }
-                var searchListCards = document.querySelectorAll(".search-list")
-                searchListCards.forEach(Element => Element.addEventListener("click",openModal))
             }
         });
 });    
 
+const myModal = document.querySelectorAll('.modal-open')
 
 
-function openModal(event){
+myModal.forEach(element => element.addEventListener('shown.bs.modal', () => {
+  var divID = this.getAttribute("data-bs-target")
+  document.getElementById(divID).focus()
+}))
+
+$(document).on("click", ".container",function(event){
     console.log(event.target.parentNode);
     console.log(event.target.getAttribute("class"));
 
-document.getElementById("movie-title-modal").innerText = this.firstElementChild.textContent;
-document.getElementById("movie-description-modal").innerText = this.lastElementChild.textContent;
-document.getElementById("movie-image-modal").setAttribute("src", this.getAttribute("data-image"));
-document.getElementById("imdb").innerText = this.getAttribute("data-imdb");
-// document.getElementById("movie-title-modal").innerHTML = "";
-// document.getElementById("movie-title-modal").innerHTML = "";
- 
-}
+document.getElementById("movie-title-modal").innerHTML = "card-title";
+document.getElementById("movie-title-modal").innerHTML = "";
+document.getElementById("movie-title-modal").innerHTML = "";
+document.getElementById("movie-title-modal").innerHTML = "";
+document.getElementById("movie-title-modal").innerHTML = "";
+document.getElementById("movie-title-modal").innerHTML = "";
+    // $('body').append(
+    //     '<div class="modal" tabindex="-1" role="dialog"><divclass="modal-dialg" role="document"> <div class="modal-content"><div class="modal-body"><p>Modal body text goes here.</p></div></div> </div> </div>'
+    // )
+    
+})
