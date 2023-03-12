@@ -4,13 +4,13 @@ var movieInput = document.querySelector("#movieText");
 function displaySearches() {
     var searchArray = JSON.parse(localStorage.getItem("Movie Title")) || [];
     console.log(searchArray)
-    
+
     $("#movieText").autocomplete({
         source: searchArray
     });
 }
 
-movieInput.addEventListener("click", function() {
+movieInput.addEventListener("click", function () {
     displaySearches();
 });
 
@@ -18,11 +18,13 @@ movieInput.addEventListener("click", function() {
 searchBtn.addEventListener("click", function () {
     var movieText = document.querySelector("#movieText").value;
     var movieString = movieText.replace(/\s/g, "+");
-    
+
     var recentSearches = JSON.parse(localStorage.getItem("Movie Title")) || [];
-    if (!recentSearches.includes(movieText)) { 
+
+    if (!recentSearches.includes(movieText)) {
         recentSearches.unshift(movieText);
     }
+
     localStorage.setItem("Movie Title", JSON.stringify(recentSearches));
     console.log(recentSearches);
 
@@ -31,49 +33,41 @@ searchBtn.addEventListener("click", function () {
 
     document.querySelector("#movieText").value = "";
 
-
-    fetch("http://www.omdbapi.com/?apikey=6bb284e5&s=" + movieString + "&type=movie&plot=long&page=1")  
+    var OMDBRequestUrl = "http://www.omdbapi.com/?apikey=695fdf11&s=" + movieString + "&type=movie";
+    
+    fetch(OMDBRequestUrl)
 
         .then(response => response.json())
         .then(data => {
-            console.log(data)
+
             for (var i = 0; i < 2; i++) {
                 var row = document.createElement("div");
                 row.classList.add("row", "my-4");
-        
-                container.appendChild(row);
-                
-                for (var i = 0; i < 8; i++) {
-  
-                    
 
+                container.appendChild(row);
+
+                for (var i = 0; i < 8; i++) {                  
                  
                     var card = document.createElement("div");
-                    card.classList.add("card", "col-3", "mb-4","search-list");
-                    card.setAttribute("data-image", data.Search[i].Poster)
-                    card.setAttribute("data-imdb", data.Search[i].imdbID)
-                    var cardBody = document.createElement("div");
-                    cardBody.classList.add("card-body");
-            
+                    card.classList.add("card", "col-2", "mb-4");
+
                     var cardTitle = document.createElement("h5");
                     cardTitle.classList.add("card-title");
                     cardTitle.setAttribute("data-title", data.Search[i].Title);
                     cardTitle.textContent = data.Search[i].Title;
-            
+
                     var cardSubtitle = document.createElement("h6");
-                    cardSubtitle.classList.add("card-subtitle");
+                    cardSubtitle.classList.add("card-subtitle", "text-muted");
                     cardSubtitle.textContent = data.Search[i].Year;
-            
-                    var cardText = document.createElement("p");
-                    cardText.classList.add("card-text");
-                    cardText.textContent = data.Search[i].type;
-            
-                    cardBody.appendChild(cardTitle);
-                    cardBody.appendChild(cardSubtitle);
-                    cardBody.appendChild(cardText);
-            
-                    card.appendChild(cardBody);
-                        
+
+                    var cardPoster = document.createElement("img");
+                    cardPoster.src = data.Search[i].Poster;
+                    cardPoster.classList.add("card-poster");
+
+                    card.appendChild(cardTitle);
+                    card.appendChild(cardSubtitle);
+                    card.appendChild(cardPoster);
+
                     row.appendChild(card);
 
                 }
@@ -97,3 +91,4 @@ document.getElementById("imdb").innerText = this.getAttribute("data-imdb");
 // document.getElementById("movie-title-modal").innerHTML = "";
  
 }
+
