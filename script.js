@@ -52,7 +52,6 @@ searchBtn.addEventListener("click", function () {
                     var card = document.createElement("div");
                     card.classList.add("card", "col-2", "mb-4", "search-list");
                     card.setAttribute("data-image", data.Search[i].Poster);
-                    card.setAttribute("data-imdb", data.Search[i].imdbID);
 
                     var cardTitle = document.createElement("h5");
                     cardTitle.classList.add("card-title");
