@@ -16,11 +16,11 @@ $(function(){
 
     
 
-    function getTheaters(event) {
+    function getTheaters(zip) {
         // zipCode TBD, need to get from input box
         // var zipCode = zipInputEl.value.trim(); -- MAKE USER INPUT FRIENDLY
         // TO DO: CHANGE THIS ZIP CODE VAR
-        var zipCode = '10038';
+        var zipCode = zip;
         var title = movieName.trim();
         var SERPrequestUrl = 'https://serpapi.com/search.json?q=' + movieName + '+theater&location=' + zipCode + '&api_key=2f6c71b88a868cdffac66297d67731a1673190c3bdac7ba49c1b7471ec52c92e';
         var proxyRequestUrl = 'https://corsproxy.io/?https%3A%2F%2Fserpapi.com%2Fsearch.json%3Fq%3D' + movieName +'+theater%26location%3D' + zipCode + '%26api_key%3D2f6c71b88a868cdffac66297d67731a1673190c3bdac7ba49c1b7471ec52c92e';
