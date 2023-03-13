@@ -111,17 +111,13 @@ myModal.forEach(element => element.addEventListener('shown.bs.modal', () => {
 }))
 
 $(document).on("click", ".container",function(event){
-    console.log(event.target.parentNode);
-    console.log(event.target.getAttribute("class"));
-
-document.getElementById("movie-title-modal").innerHTML = "card-title";
-document.getElementById("movie-title-modal").innerHTML = "";
-document.getElementById("movie-title-modal").innerHTML = "";
-document.getElementById("movie-title-modal").innerHTML = "";
-document.getElementById("movie-title-modal").innerHTML = "";
-document.getElementById("movie-title-modal").innerHTML = "";
-    // $('body').append(
-    //     '<div class="modal" tabindex="-1" role="dialog"><divclass="modal-dialg" role="document"> <div class="modal-content"><div class="modal-body"><p>Modal body text goes here.</p></div></div> </div> </div>'
-    // )
-    
+  console.log(event.target.parentNode);
+  console.log(event.target.getAttribute("class"));
+  document.getElementById("movie-title-modal").innerHTML = "card-title";
+  document.getElementById("movie-title-modal").innerHTML = "";
+  document.getElementById("movie-title-modal").innerHTML = "";
+  document.getElementById("movie-title-modal").innerHTML = "";
+  document.getElementById("movie-title-modal").innerHTML = "";
+  document.getElementById("movie-title-modal").innerHTML = "";
+  
 })

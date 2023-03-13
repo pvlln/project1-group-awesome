@@ -2,20 +2,71 @@
 $(function(){
     // TO DO: CHANGE OUTPUT CONTAINER ID/CLASS & VAR NAME-- DELETE FETCH BUTTON
     // output container
-    var userContainer = $('#users');
+    var userContainer = $('.modal-body');
     // fetch button
-    var fetchButton = $('#fetch-button');
+    // var fetchButton = $('#fetch-button');
 
 
     // TO DO: INSERT CORRECT ID/CLASS FOR ZIP CODE INPUT BOX
-    var zipInputEl = $('#zip-code');
+    //var zipInputEl = $('#zip-code');
     // TO DO: INSERT CORRECT ID/CLASS FOR ENTER BUTTON
-    var theaterSearchButton = $('#theater-search-btn');
+    //var theaterSearchButton = $('#theater-search-btn');
     // TO DO: INSERT CORRECT MOVIE NAME ELEMENT
-    var movieName = 'Cocaine+Bear'; // Should be created previously
+    // var movieName = 'Cocaine+Bear'; // Should be created previously
 
+    function getMovieInfo (movieName){
+        var proxyRequestUrl = 'https://corsproxy.io/?https%3A%2F%2Fserpapi.com%2Fsearch.json%3Fq%3D' + movieName +'+theater%26location%3D' + zipCode + '%26api_key%3D2f6c71b88a868cdffac66297d67731a1673190c3bdac7ba49c1b7471ec52c92e';
+        fetch().then(function(response){
+            // Get the movie overview from the data
+            var overview = data.knowledge_graph;
+            // Create object that stores movie info
+            var movieInfo = {
+                Type: overview.type,
+                Director: overview.director,
+                Cinematographer: overview.cinematography,
+                Cast: overview.cast,
+            }
+            // Function that creates a new row
+            function createRowEl(class1, class2) {
+                var newRow = document.createElement('div');
+                newRow.classList.add('row', class1, class2);
+                return newRow;
+            }
+            // Create div to store the information for the movie
+            var movie = document.createElement('div');
+            // Create array that stores each row
+            rows = [];
+            // Create the info element for the movie
+            var infoEl = createRowEl('justify-content-center', 'my-5');
+            var movieType = document.createElement('h5');
+            movieType.classList.add('col-12', 'text-muted');
+            movieType.textContent(movieInfo.Type);
+            infoEl.append(movieType);
+            rows.push(infoEl);
     
-
+            for (let i=1; i<Object.entries(movieInfo).length; i++){
+                // Create row for titles
+                var titleRow = createRowEl('justify-content-center', 'my-5');
+                var bodyRow = createRowEl('justify-content-baseline');
+                var newTitle = `<h5>${Object.keys(movieInfo)[i]}</h5>`;
+                titleRow.append(newTitle);
+                var newBody = movieInfo[Object.keys(movieInfo)[i]] ? `<p>${Object.values[i]}</p>` : 'Information not available for this title';
+                bodyRow.append(newBody);
+                rows.push(titleRow, bodyRow);
+            }
+            movie.append(rows);
+            userContainer.append(movie);
+            // INPUT SERPJS HERE!!
+            var zipPrompt = createRowEl('justify-content-center', 'my-5');
+            zipPrompt.append('<h3>Search for this title in theaters near you- <br><small class="text-muted">Enter your Zip Code below</small></h3>');
+            rows.push(zipPrompt);
+            var zipInputRow = createRowEl('justify-content-center', 'my-5');
+            zipInputRow.append('<input type="text" placeholder="Enter Zip Code" class="col-6" id="zipCode"></input>');
+            var zipCode = $('#zipCode').val();
+            zipInputRow.append(`<button class="col-4" onclick=getTheaters(${zipCode})id="zipSearchBtn">Search</button>`);
+        })
+    }
+    
     function getTheaters(zip) {
         // zipCode TBD, need to get from input box
         // var zipCode = zipInputEl.value.trim(); -- MAKE USER INPUT FRIENDLY
@@ -121,7 +172,7 @@ $(function(){
         });
     }
     // CHANGE FETCH BUTTON
-    fetchButton.addEventListener('click', getTheaters);
+    // fetchButton.addEventListener('click', getTheaters);
 
     //"https://serpapi.com/search.json?q=Cocaine+Bear+theater&num=4&location=10038&api_key=2f6c71b88a868cdffac66297d67731a1673190c3bdac7ba49c1b7471ec52c92e" 
 });
