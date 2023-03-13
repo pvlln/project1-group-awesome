@@ -16,6 +16,8 @@ movieInput.addEventListener("click", function () {
 
 
 searchBtn.addEventListener("click", function () {
+    var background = document.querySelector(".background"); 
+
     var movieText = document.querySelector("#movieText").value;
     var movieString = movieText.replace(/\s/g, "+");
 
@@ -44,14 +46,25 @@ searchBtn.addEventListener("click", function () {
             for (var i = 0; i < 2; i++) {
                 var row = document.createElement("div");
                 row.classList.add("row", "my-4");
+                // row.setAttribute("id", `row-${index}`)
 
                 container.appendChild(row);
 
-                for (var i = 0; i < 8; i++) {                  
-                 
+                for (var i = 0; i < 8; i++) {  
+                    // var src = data.Search[i].Poster === "N/A" ? "./assets/images/Image_not_available.png" : data.Search[i].Poster;                
+                    // var card = `
+                    //     <div class="card col-2 my-4 search-list" data-image="${data.Search[i].Poster}">
+                    //         <h5 class="card-title" data-title="${data.Search[i].Title}"> ${data.Search[i].Title} </h5>
+                    //         <h6 class="card-subtitle text-muted">${data.Search[i].Year}</h6>
+                    //         <img src=${src} class="card-poster"/>
+                    //     </div>
+                    // `
+                    // data-bs-toggle="modal" data-bs-target="#modal-view"
                     var card = document.createElement("div");
-                    card.classList.add("card", "col-2", "mb-4", "search-list");
+                    card.classList.add("card", "col-2", "my-4", "search-list");
                     card.setAttribute("data-image", data.Search[i].Poster);
+                    card.setAttribute("data-bs-toggle", "modal");
+                    card.setAttribute("data-bs-target", "#modal-view");
 
                     var cardTitle = document.createElement("h5");
                     cardTitle.classList.add("card-title");
@@ -63,7 +76,7 @@ searchBtn.addEventListener("click", function () {
                     cardSubtitle.textContent = data.Search[i].Year;
 
                     var cardPoster = document.createElement("img");
-                    cardPoster.src = data.Search[i].Poster;
+                    cardPoster.src = data.Search[i].Poster === "N/A" ? "./assets/images/Image_not_available.png" : data.Search[i].Poster;
                     cardPoster.classList.add("card-poster");
 
                     card.appendChild(cardTitle);
@@ -71,6 +84,7 @@ searchBtn.addEventListener("click", function () {
                     card.appendChild(cardPoster);
 
                     row.appendChild(card);
+                    // $(`#row-${index}`).append(card);
 
                 }
                 var searchListCards = document.querySelectorAll(".search-list")
@@ -82,6 +96,7 @@ searchBtn.addEventListener("click", function () {
 
 
 function openModal(event){
+    console.log(event);
     console.log(event.target.parentNode);
     console.log(event.target.getAttribute("class"));
 
