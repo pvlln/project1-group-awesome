@@ -1,3 +1,13 @@
+.background {
+    background-image: url(./assets/images/jake-hills-23LET4Hxj_U-unsplash.jpg);
+    background-size: cover;
+    background-position: center bottom;
+}
+
+.background-opacity {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
 .container {
     height: 1000px;
 }
@@ -17,4 +27,5 @@
     justify-content: center;
     align-items: center;
     min-height: 400px;
+    border-radius: 20px;
 }
