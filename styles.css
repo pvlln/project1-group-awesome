@@ -1,7 +1,23 @@
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+footer {
+    margin-top: auto;
+}
+
+
 .background {
     background-image: url(./assets/images/jake-hills-23LET4Hxj_U-unsplash.jpg);
     background-size: cover;
     background-position: center bottom;
+    position: absolute;
+    top: calc(100px); 
+    bottom: calc(25px);
+    left: 0;
+    right: 0;
 }
 
 .background-opacity {
@@ -10,6 +26,7 @@
 
 .container {
     height: 1000px;
+    opacity: 1;
 }
 
 .card-poster {
@@ -19,6 +36,8 @@
     height: 250px;
     width: 175px;
     display: block;
+    max-width: 100%;
+    max-height: 100%;
 }
 
 .card {
@@ -28,4 +47,7 @@
     align-items: center;
     min-height: 400px;
     border-radius: 20px;
+    background: linear-gradient(#e66465, #bcbfc9);
+    color: aliceblue;
+    opacity: 1.0;
 }
