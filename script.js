@@ -80,12 +80,12 @@ searchBtn.addEventListener("click", function () {
 });    
 
 function openModal(event){
-    console.log(event.target.parentNode);
+    console.log(event.target.parentNode, this);
     console.log(event.target.getAttribute("class"));
-    document.getElementById("movie-title-modal").innerText = this.firstElementChild.textContent;
-    document.getElementById("movie-description-modal").innerText = this.lastElementChild.textContent;
+    document.getElementById("movie-title-modal").textContent = this.firstElementChild.textContent;
+    document.getElementById("movie-description-modal").textContent = this.lastElementChild.textContent;
     document.getElementById("movie-image-modal").setAttribute("src", this.getAttribute("data-image"));
-    document.getElementById("imdb").innerText = this.getAttribute("data-imdb");
+    // document.getElementById("imdb").textContent = this.getAttribute("data-imdb");
     // document.getElementById("movie-title-modal").innerHTML = "";
     // document.getElementById("movie-title-modal").innerHTML = "";
     var movieTitle = document.querySelector('#movie-title-modal').textContent; 
@@ -93,11 +93,12 @@ function openModal(event){
     getMovieInfo(movieTitle);
 }
 
-var userContainer = $('.modal-body');
+var userContainer = document.querySelector('.modal-body');
 var title = document.querySelector('#movie-title-modal').textContent;
 
 function getMovieInfo (movie){
     var movieName = movie.replace(/\s/g, "+");
+    userContainer.innerHTML = '';
     var proxyRequestUrl = 'https://corsproxy.io/?https%3A%2F%2Fserpapi.com%2Fsearch.json%3Fq%3D' + movieName +'%26google_domain%3Dgoogle.com%26location%3D10001%26api_key%3D2f6c71b88a868cdffac66297d67731a1673190c3bdac7ba49c1b7471ec52c92e';
     fetch(proxyRequestUrl).then(function (response) {
         return response.json();
@@ -110,8 +111,8 @@ function getMovieInfo (movie){
         console.log(data, overview);
         var movieInfo = {
             Type: overview.type,
+            Description: overview.description,
             Director: overview.director,
-            Cinematographer: overview.cinematography,
             Cast: overview.cast,
         }
         console.log(movieInfo);
@@ -132,50 +133,73 @@ function getMovieInfo (movie){
         movieType.textContent = movieInfo.Type;
         infoEl.append(movieType);
         rows.push(infoEl);
-
-        // FIX THIS CODE
-        for (let i=1; i<Object.entries(movieInfo).length; i++){
+        for (let i=1; i<(Object.entries(movieInfo).length -1); i++){
             // Create row for titles
             var titleRow = createRowEl('justify-content-center', 'my-5');
             var bodyRow = createRowEl('justify-content-baseline');
-            // var newTitle = `<h5>${Object.keys(movieInfo)[i]}</h5>`;
-            var newTitle = Object.keys(movieInfo)[i];
+            var newTitle = document.createElement('h5');
+            newTitle.textContent = Object.keys(movieInfo)[i];
+            //var newTitle = Object.keys(movieInfo)[i];
             titleRow.append(newTitle);
-            // var newBody = movieInfo[Object.keys(movieInfo)[i]] ? `<p>${Object.values[i]}</p>` : 'Information not available for this title';
-            // var newBody = `<p>${Object.values[i]}</p>`
-            var newBody = Object.values[i];
+            var newBody = document.createElement('p');
+            newBody.textContent = (movieInfo[Object.keys(movieInfo)[i]] ? Object.values(movieInfo)[i]: 'This information not available for this title');
+            //var newBody = `<p>${Object.values(movieInfo)[i]}</p>`
+            //var newBody = Object.values(movieInfo)[i];
             bodyRow.append(newBody);
             rows.push(titleRow, bodyRow);
         }
-        for (let i=0;i<rows.length;i++){
-            movie.innerText += rows[i].innerText;
-            movie.innerHTML = '<br>';
-            console.log(rows[i].innerText);
-        }
+        var castTitleRow = createRowEl('justify-content-center', 'my-5');
+        var castTitle = document.createElement('h5');
+        castTitle.textContent = 'Cast: ';
+        castTitleRow.append(castTitle);
+        rows.push(castTitleRow);
+        // if (movieInfo.Cast[0]){
+        //     var titleRow = createRowEl('justify-content-center', 'my-5');
+        //     var bodyRow = createRowEl('justify-content-baseline');
+        //     var newTitle = document.createElement('h5');
+        //     for (let i=0; i<movieInfo.Cast.length; i++){
 
-        // movie.append(rows);
-        console.log(rows);
+        //     }
+        // }
+        for (let i=0; i<movieInfo.Cast.length; i++){
+            // or Object.entries(movieInfo)[(Object.entries(movieInfo).length-1)]
+            if (movieInfo.Cast[0]){
+                var titleRow = createRowEl('justify-content-center', 'my-5');
+                var bodyRow = createRowEl('justify-content-baseline');
+                var newTitle = document.createElement('h5');
+                newTitle.textContent = movieInfo.Cast[i].name;
+                //var newTitle = Object.keys(movieInfo)[i];
+                titleRow.append(newTitle);
+                rows.push(titleRow);
+            }
+        }
+        for (let i=0;i<rows.length;i++){
+            movie.innerHTML += rows[i].innerHTML;
+            movie.innerHTML += '<br>';
+        }
         userContainer.append(movie);
-        // INPUT SERPJS HERE!!
         var zipPrompt = createRowEl('justify-content-center', 'my-5');
-        zipPrompt.append('<h3>Search for this title in theaters near you- <br><small class="text-muted">Enter your Zip Code below</small></h3>');
-        rows.push(zipPrompt);
+        zipPrompt.innerHTML = '<h3>Search for this title in theaters near you- <br><small class="text-muted">Enter your Zip Code below</small></h3>';
+        userContainer.append(zipPrompt);
         var zipInputRow = createRowEl('justify-content-center', 'my-5');
-        zipInputRow.append('<input type="text" placeholder="Enter Zip Code" class="col-6" id="zipCode"></input>');
-        var zipCode = $('#zipCode').val();
-        zipInputRow.append(`<button class="col-4" onclick=getTheaters(${zipCode})id="zipSearchBtn">Search</button>`);
+        zipInputRow.innerHTML = '<input type="text" placeholder="Enter Zip Code" class="col-6" id="zipCode"></input>';
+        zipInputRow.innerHTML += `<button class="col-4" id="zipSearchBtn">Search</button>`;
+        userContainer.append(zipInputRow);
+
+        var zipSearchBtn = document.querySelector('#zipSearchBtn')
+        zipSearchBtn.addEventListener('click', getTheaters);
     })
 }
 
-function getTheaters(zip) {
-    // zipCode TBD, need to get from input box
-    // var zipCode = zipInputEl.value.trim(); -- MAKE USER INPUT FRIENDLY
-    // TO DO: CHANGE THIS ZIP CODE VAR
-    var zipCode = zip;
+function getTheaters() {
+    var title = document.querySelector('#movie-title-modal').textContent;
+    var zipCodeEl = document.querySelector('#zipCode');
+    var zipCode = zipCodeEl.value.trim();
     var movieName = title.replace(/\s/g, "+");
+    console.log(movieName, "THIS ONE");
     var SERPrequestUrl = 'https://serpapi.com/search.json?q=' + movieName + '+theater&location=' + zipCode + '&api_key=2f6c71b88a868cdffac66297d67731a1673190c3bdac7ba49c1b7471ec52c92e';
     var proxyRequestUrl = 'https://corsproxy.io/?https%3A%2F%2Fserpapi.com%2Fsearch.json%3Fq%3D' + movieName +'+theater%26location%3D' + zipCode + '%26api_key%3D2f6c71b88a868cdffac66297d67731a1673190c3bdac7ba49c1b7471ec52c92e';
-
+    //                      'https://corsproxy.io/?https%3A%2F%2Fserpapi.com%2Fsearch.json%3Fq%3DAvatar          +theater%26location%3D    30041      %26api_key%3D2f6c71b88a868cdffac66297d67731a1673190c3bdac7ba49c1b7471ec52c92e';
     // Fetch request
     fetch(proxyRequestUrl)
     // Manipulate the response to receive in json format
@@ -185,7 +209,7 @@ function getTheaters(zip) {
         // INPUT INFORMATION FUNCTION
         // Function to manipulate data
     .then(function (data) {
-        console.log(data);
+        console.log(data, "THIS IS THE DATA");
         // Variable to store showtimes data
         var showtimes = data.showtimes;
         // Add title to html
