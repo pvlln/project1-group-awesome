@@ -16,7 +16,6 @@ movieInput.addEventListener("click", function () {
 
 
 searchBtn.addEventListener("click", function () {
-    var background = document.querySelector(".background"); 
 
     var movieText = document.querySelector("#movieText").value;
     var movieString = movieText.replace(/\s/g, "+");
