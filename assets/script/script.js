@@ -113,7 +113,7 @@ var title = document.querySelector('#movie-title-modal').textContent;
 function getMovieInfo (movie){
     var movieName = movie.replace(/\s/g, "+");
     userContainer.innerHTML = '';
-    var proxyRequestUrl = 'https://corsproxy.io/?https%3A%2F%2Fserpapi.com%2Fsearch.json%3Fq%3D' + movieName +'%26google_domain%3Dgoogle.com%26location%3D10001%26api_key%3D2f6c71b88a868cdffac66297d67731a1673190c3bdac7ba49c1b7471ec52c92e';
+    var proxyRequestUrl = 'https://corsproxy.io/?https%3A%2F%2Fserpapi.com%2Fsearch.json%3Fq%3D' + movieName +'%26google_domain%3Dgoogle.com%26location%3D10001%26api_key%3D17b39452db2fd97ba88e2f7a6bb9a5ecf5e52e4e633d9c698a180edb534d0a41';
     fetch(proxyRequestUrl).then(function (response) {
         return response.json();
     })
@@ -212,7 +212,7 @@ function getTheaters() {
     var movieName = title.replace(/\s/g, "+");
     console.log(movieName, "THIS ONE");
     var SERPrequestUrl = 'https://serpapi.com/search.json?q=' + movieName + '+theater&location=' + zipCode + '&api_key=2f6c71b88a868cdffac66297d67731a1673190c3bdac7ba49c1b7471ec52c92e';
-    var proxyRequestUrl = 'https://corsproxy.io/?https%3A%2F%2Fserpapi.com%2Fsearch.json%3Fq%3D' + movieName +'+theater%26location%3D' + zipCode + '%26api_key%3D2f6c71b88a868cdffac66297d67731a1673190c3bdac7ba49c1b7471ec52c92e';
+    var proxyRequestUrl = 'https://corsproxy.io/?https%3A%2F%2Fserpapi.com%2Fsearch.json%3Fq%3D' + movieName +'+theater%26location%3D' + zipCode + '%26api_key%3D17b39452db2fd97ba88e2f7a6bb9a5ecf5e52e4e633d9c698a180edb534d0a41';
     //                      'https://corsproxy.io/?https%3A%2F%2Fserpapi.com%2Fsearch.json%3Fq%3DAvatar          +theater%26location%3D    30041      %26api_key%3D2f6c71b88a868cdffac66297d67731a1673190c3bdac7ba49c1b7471ec52c92e';
     // Fetch request
     fetch(proxyRequestUrl)
