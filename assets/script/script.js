@@ -17,7 +17,7 @@ movieInput.addEventListener("click", function () {
 
 searchBtn.addEventListener("click", function () {
 
-    var movieText = document.querySelector("#movieText").value;
+    var movieText = document.querySelector("#movieText").value.trim();
     var movieString = movieText.replace(/\s/g, "+");
 
     var recentSearches = JSON.parse(localStorage.getItem("Movie Title")) || [];
@@ -44,7 +44,7 @@ searchBtn.addEventListener("click", function () {
 
             for (var i = 0; i < 2; i++) {
                 var row = document.createElement("div");
-                row.classList.add("row", "my-4");
+                row.classList.add("row", "row-cols-6", "my-4", "justify-content-center");
                 // row.setAttribute("id", `row-${index}`)
 
                 container.appendChild(row);
@@ -60,7 +60,7 @@ searchBtn.addEventListener("click", function () {
                     // `
                     // data-bs-toggle="modal" data-bs-target="#modal-view"
                     var card = document.createElement("div");
-                    card.classList.add("card", "col-2", "my-4", "search-list");
+                    card.classList.add("card", "my-4", "search-list");
                     card.setAttribute("data-image", data.Search[i].Poster);
                     card.setAttribute("data-bs-toggle", "modal");
                     card.setAttribute("data-bs-target", "#modal-view");
