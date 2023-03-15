@@ -1,6 +1,7 @@
 var searchBtn = document.querySelector("#searchBtn");
 var movieInput = document.querySelector("#movieText");
 
+// adds autocomplete functionality using jQuery UI; reads from searches in local storage
 function displaySearches() {
     var searchArray = JSON.parse(localStorage.getItem("Movie Title")) || [];
     console.log(searchArray)
@@ -10,19 +11,20 @@ function displaySearches() {
     });
 }
 
+// runs above function when movie input box is clicked
 movieInput.addEventListener("click", function () {
     displaySearches();
 });
 
 
 searchBtn.addEventListener("click", function () {
-
+    // replaces number inputs with strings; replaces empty spaces with '+' for use in later fetch requests
     var movieText = document.querySelector("#movieText").value.trim();
-    if (!isNaN(movieText)) {
+    if (isNaN(movieText)) {
         movieText = movieText.toString();
     }
     var movieString = movieText.replace(/\s/g, "+");
-
+    // adds search to local storage if it is not a duplicate search
     var recentSearches = JSON.parse(localStorage.getItem("Movie Title")) || [];
 
     if (!recentSearches.includes(movieText)) {
@@ -32,36 +34,28 @@ searchBtn.addEventListener("click", function () {
     localStorage.setItem("Movie Title", JSON.stringify(recentSearches));
     console.log(recentSearches);
 
+    // clears previous search cards and text input field when search button is clicked
     var container = document.querySelector(".container");
     container.innerHTML = "";
 
     document.querySelector("#movieText").value = "";
-
-    var OMDBRequestUrl = "http://www.omdbapi.com/?apikey=695fdf11&s=" + movieString + "&type=movie";
+    // stores OMDB api fetch url in a variable. String of the search item with '+' replacing spaces is concatenated to the query parameters.
+    var OMDBRequestUrl = "https://www.omdbapi.com/?apikey=695fdf11&s=" + movieString + "&type=movie";
     
     fetch(OMDBRequestUrl)
 
         .then(response => response.json())
         .then(data => {
             console.log(data)
-
+            // creates rows for the movie card search results to be displayed in.
             for (var i = 0; i < 2; i++) {
                 var row = document.createElement("div");
                 row.classList.add("row", "row-cols-6", "my-4", "justify-content-center");
-                // row.setAttribute("id", `row-${index}`)
 
                 container.appendChild(row);
-
+                // creates the movie search result cards with data from OMDB.
                 for (var i = 0; i < 8; i++) {  
-                    // var src = data.Search[i].Poster === "N/A" ? "./assets/images/Image_not_available.png" : data.Search[i].Poster;                
-                    // var card = `
-                    //     <div class="card col-2 my-4 search-list" data-image="${data.Search[i].Poster}">
-                    //         <h5 class="card-title" data-title="${data.Search[i].Title}"> ${data.Search[i].Title} </h5>
-                    //         <h6 class="card-subtitle text-muted">${data.Search[i].Year}</h6>
-                    //         <img src=${src} class="card-poster"/>
-                    //     </div>
-                    // `
-                    // data-bs-toggle="modal" data-bs-target="#modal-view"
+
                     var card = document.createElement("div");
                     card.classList.add("card", "my-4", "search-list");
                     card.setAttribute("data-image", data.Search[i].Poster);
@@ -86,15 +80,16 @@ searchBtn.addEventListener("click", function () {
                     card.appendChild(cardPoster);
 
                     row.appendChild(card);
-                    // $(`#row-${index}`).append(card);
 
                 }
+                // Opens modal when a card is clicked
                 var searchListCards = document.querySelectorAll(".search-list")
                 searchListCards.forEach(Element => Element.addEventListener("click",openModal))
             }
         });
 });    
 
+// Creates the modal using data attributes from selected card
 function openModal(event){
     console.log(event.target.parentNode, this);
 
@@ -102,9 +97,7 @@ function openModal(event){
     document.getElementById("movie-title-modal").textContent = this.firstElementChild.textContent;
     document.getElementById("movie-description-modal").textContent = this.lastElementChild.textContent;
     document.getElementById("movie-image-modal").setAttribute("src", this.getAttribute("data-image"));
-    // document.getElementById("imdb").textContent = this.getAttribute("data-imdb");
-    // document.getElementById("movie-title-modal").innerHTML = "";
-    // document.getElementById("movie-title-modal").innerHTML = "";
+
     var movieTitle = document.querySelector('#movie-title-modal').textContent; 
     console.log(movieTitle);
     getMovieInfo(movieTitle);
@@ -170,22 +163,15 @@ function getMovieInfo (movie){
         castTitle.textContent = 'Cast: ';
         castTitleRow.append(castTitle);
         rows.push(castTitleRow);
-        // if (movieInfo.Cast[0]){
-        //     var titleRow = createRowEl('justify-content-center', 'my-5');
-        //     var bodyRow = createRowEl('justify-content-baseline');
-        //     var newTitle = document.createElement('h5');
-        //     for (let i=0; i<movieInfo.Cast.length; i++){
 
-        //     }
-        // }
         for (let i=0; i<movieInfo.Cast.length; i++){
-            // or Object.entries(movieInfo)[(Object.entries(movieInfo).length-1)]
+
             if (movieInfo.Cast[0]){
                 var titleRow = createRowEl('justify-content-center', 'my-5');
                 var bodyRow = createRowEl('justify-content-baseline');
                 var newTitle = document.createElement('h5');
                 newTitle.textContent = movieInfo.Cast[i].name;
-                //var newTitle = Object.keys(movieInfo)[i];
+
                 titleRow.append(newTitle);
                 rows.push(titleRow);
             }
@@ -216,14 +202,14 @@ function getTheaters() {
     console.log(movieName, "THIS ONE");
     var SERPrequestUrl = 'https://serpapi.com/search.json?q=' + movieName + '+theater&location=' + zipCode + '&api_key=2f6c71b88a868cdffac66297d67731a1673190c3bdac7ba49c1b7471ec52c92e';
     var proxyRequestUrl = 'https://corsproxy.io/?https%3A%2F%2Fserpapi.com%2Fsearch.json%3Fq%3D' + movieName +'+theater%26location%3D' + zipCode + '%26api_key%3D17b39452db2fd97ba88e2f7a6bb9a5ecf5e52e4e633d9c698a180edb534d0a41';
-    //                      'https://corsproxy.io/?https%3A%2F%2Fserpapi.com%2Fsearch.json%3Fq%3DAvatar          +theater%26location%3D    30041      %26api_key%3D2f6c71b88a868cdffac66297d67731a1673190c3bdac7ba49c1b7471ec52c92e';
+   
     // Fetch request
     fetch(proxyRequestUrl)
     // Manipulate the response to receive in json format
     .then(function (response) {
         return response.json();
     })
-        // INPUT INFORMATION FUNCTION
+
         // Function to manipulate data
     .then(function (data) {
         console.log(data, "THIS IS THE DATA");
@@ -312,10 +298,3 @@ function getTheaters() {
         }})
     });
 }
-// CHANGE FETCH BUTTON
-// fetchButton.addEventListener('click', getTheaters);
-
-//"https://serpapi.com/search.json?q=Cocaine+Bear+theater&num=4&location=10038&api_key=2f6c71b88a868cdffac66297d67731a1673190c3bdac7ba49c1b7471ec52c92e" 
-
-
-
