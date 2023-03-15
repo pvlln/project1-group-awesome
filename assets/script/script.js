@@ -18,6 +18,9 @@ movieInput.addEventListener("click", function () {
 searchBtn.addEventListener("click", function () {
 
     var movieText = document.querySelector("#movieText").value.trim();
+    if (!isNaN(movieText)) {
+        movieText = movieText.toString();
+    }
     var movieString = movieText.replace(/\s/g, "+");
 
     var recentSearches = JSON.parse(localStorage.getItem("Movie Title")) || [];

@@ -15,30 +15,17 @@ header {
     white-space: nowrap;
 }
 
-
-#searchBtn {
-    border-radius: 25px;
-    height: 4vh;
-    font-size: 18px;
-}
-
-.navbar {
-    justify-content: space-around;
-}
-
-#movieText {
-    border-radius: 25px;
-    height: 4vh;
+footer {
+    margin: 0 auto;
+    margin-top: auto;
 }
 
 textarea:focus, input:focus {
     color: #e66465;
 }
 
-
-footer {
-    margin: 0 auto;
-    margin-top: auto;
+.navbar {
+    justify-content: space-around;
 }
 
 .background {
@@ -70,6 +57,17 @@ footer {
     border-radius: 20px;
     background: linear-gradient(#e66465, #bcbfc9);
     color: aliceblue;
+}
+
+#searchBtn {
+    border-radius: 25px;
+    height: 4vh;
+    font-size: 18px;
+}
+
+#movieText {
+    border-radius: 25px;
+    height: 4vh;
 }
 
 @media screen and (max-width: 1700px) {
