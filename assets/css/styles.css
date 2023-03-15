@@ -1,3 +1,4 @@
+/* sets styling, Google Font and a background image */
 body {
     min-height: 100vh;
     display: flex;
@@ -5,16 +6,18 @@ body {
     background-image: url(../images/jake-hills-23LET4Hxj_U-unsplash.jpg);
     background-size: cover;
     background-position: center bottom;
+    font-family: 'Raleway';
 }
 
 header, footer {
     color: #bcbfc9;
 }
-
+ /* makes sure the header stays on one line at max screen sizes */
 header {
     white-space: nowrap;
 }
 
+/* aligns footer to bottom-center */
 footer {
     margin: 0 auto;
     margin-top: auto;
@@ -37,6 +40,7 @@ textarea:focus, input:focus {
     margin-right: auto;
 }
 
+/* ensures movie poster on cards do not look skewed at different screen sizes */
 .card-poster {
     position: relative;
     overflow: hidden;
@@ -70,6 +74,7 @@ textarea:focus, input:focus {
     height: 4vh;
 }
 
+/* styles the webpage so that it is legible at smaller screen sizes */
 @media screen and (max-width: 1700px) {
     header {
         white-space: normal;

@@ -30,3 +30,5 @@ Some movies which titles only consist of numbers can cause an error in the appli
 The call to Serp API has a lag or delay before the movie info items are displayed.
 
 ## Credits
+
+1. Natasha Mann (tutor) - helped fix an error with empty modals popping up when empty space on the page was clicked.
