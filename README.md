@@ -6,7 +6,7 @@ This is a movie search/lookup application that is also able to check if a select
 
 [GitHub Repo](https://github.com/pvlln/project1-group-awesome)
 
-[Website]()
+[Website](https://pvlln.github.io/project1-group-awesome/)
 
 Preview Images:
 

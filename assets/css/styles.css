@@ -75,7 +75,7 @@ textarea:focus, input:focus {
 }
 
 /* styles the webpage so that it is legible at smaller screen sizes */
-@media screen and (max-width: 1700px) {
+@media screen and (max-width: 1800px) {
     header {
         white-space: normal;
     }
