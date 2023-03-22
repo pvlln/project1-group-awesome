@@ -32,3 +32,4 @@ The call to Serp API has a lag or delay before the movie info items are displaye
 ## Credits
 
 1. Natasha Mann (tutor) - helped fix an error with empty modals popping up when empty space on the page was clicked.
+2. Sangeetha Kaliaperumal (Tutor), Deigo (Instructor) - Helped with the modal feature.
